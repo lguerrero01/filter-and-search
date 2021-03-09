@@ -73,7 +73,7 @@ console.log(datosBusqueda);
 
 //eventos 
 document.addEventListener('DOMContentLoaded', () => {
-    mostrarAutos();// muestra los automoviles al cargar
+    mostrarAutos(autos);// muestra los automoviles al cargar
 
     // llena las opciones de a;os
     llenarSelect();
@@ -91,18 +91,19 @@ function limpiarHTML() {
     }
 }
 
-function mostrarAutos() {
+function mostrarAutos(autos) {
     limpiarHTML();
-    autos.forEach( auto => {
+console.log(autos);
+    // Leer el elemento Resultado
+    const contenedor = document.querySelector('#resultado');
 
+    // Construir el HTML de los autos
+    autos.forEach(auto => {
         const autoHTML = document.createElement('p');
-
-        autoHTML.textContent = `
-            ${auto.marca} ${auto.modelo} - ${auto.year} - ${auto.puertas} Puertas - Transmisión: ${auto.transmision} - Precio: ${auto.precio} - Color: ${auto.color}
+        autoHTML.innerHTML = `
+            <p>${auto.marca} ${auto.modelo} - ${auto.year} - ${auto.puertas} Puertas - Transmisión: ${auto.transmision} - Precio: ${auto.precio} - Color: ${auto.color}</p>
         `;
-
-// insertar en el html
-    resultados.appendChild(autoHTML);
+        contenedor.appendChild(autoHTML);
     })
 }
 
@@ -115,7 +116,14 @@ function llenarSelect () {
         year.appendChild(opcion);
     }
 }
+function noResultado() {
+    limpiarHTML();
 
+    const noResultado = document.createElement('div');
+    noResultado.classList.add('alerta', 'error');
+    noResultado.appendChild(document.createTextNode('No hay Resultados'));
+    document.querySelector('#resultado').appendChild(noResultado);
+}
 function filtrarAuto () {
     const resultado = autos.filter(filtrarMarca).filter(filtrarYear).filter(filtrarMinimo).filter(filtrarMaximo).filter(filtrarPuertas).filter(filtrarTransmision).filter(filtrarColor);
 
@@ -126,6 +134,7 @@ function filtrarAuto () {
            noResultado();
        }
 }
+
 
 // Aplica los filtros
 function filtrarMarca(auto) {
