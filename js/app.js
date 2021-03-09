@@ -81,9 +81,18 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 //funciones \
+function limpiarHTML() {
+    // Leer el elemento Resultado
+    const contenedor = document.querySelector('#resultado');
+
+    // limpiar los resultados anteriores
+    while(contenedor.firstChild) {
+        contenedor.removeChild(contenedor.firstChild);
+    }
+}
 
 function mostrarAutos() {
-
+    limpiarHTML();
     autos.forEach( auto => {
 
         const autoHTML = document.createElement('p');
